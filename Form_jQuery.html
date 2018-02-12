@@ -1,0 +1,103 @@
+<form name="TestForm"  action="test.php" method="post">
+
+    First: <input type="text" name="fname" id="fname" value="Javi"/> <br>
+    Last: <input type="text" name="lname" id="lname" value="Pons"/> <br>
+    Age: <input type="tnumber" name="age" id="age" value="44"/> <br>
+    <input type="button" value="SEND via AJAX" onclick="postData()">
+    <input type="submit">
+</form>
+
+<div id="output1">People List</div>
+<div id="astatus" >Status</div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+
+    $(document).ready(function(){
+        // $('#output1').load('output.html');   esto es para load cualquier cosa en donde le digas
+        var url = "test.php";
+
+        var vars = {
+            fname:$('#fname').val(),
+            lname:$('#lname').val(),
+            age:$('#age').val(),
+        }
+
+        $.post(url, vars, function(data, status, xhr){
+            
+            console.log(data);
+            console.log(status);
+            console.log(xhr);
+            console.log(JSON.parse(data));
+            var json = JSON.parse(data);
+            $('#output1').html(json.last);
+
+        })
+
+    })
+
+    /*
+    var output1 = document.getElementById("output1");
+    var astatus = document.getElementById("astatus");
+   
+function postData() {
+    var firstName = document.getElementById('fname').value;
+    var lastName = document.getElementById('lname').value;
+    var age = document.getElementById('age').value;
+    var vars = "fname="+firstName +"&lname="+lastName+"&age="+age;
+    console.log(vars);
+    var hr = new XMLHttpRequest();
+    var url = "test.php";
+
+     hr.onreadystatechange = function() {
+    if(this.readyState == 4 && this.status == 200) {
+        var myObj = JSON.parse(hr.responseText);
+       astatus.innerHTML = myObj.xstatus + ' ' + myObj.id;
+        console.log(myObj);
+    }
+}
+hr.open("POST",url,true);
+hr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+hr.send(vars);
+astatus.innerHTML = "processing...";
+}
+
+
+
+
+/*  esto era una manera de hacerlo antes de usar AJAX
+
+ console.log(myObj1);
+
+ var myObj = JSON.parse(myObj1);
+
+console.log(myObj);
+
+
+for (var i = 0; i< myObj.people.length; i++) {
+    output1.innerHTML += "<br>" + myObj.people[i].firstName 
+    + " " + myObj.people[i].lastName;
+   
+}
+
+for (var j = 0; j < myObj.places.length; j++) {
+    output2.innerHTML += "<br>" + myObj.places[j].location 
+    + " " + myObj.places[j].lat + " " + myObj.places[j].long; 
+}
+
+
+var name = 'Name'
+var i = 0;
+
+
+output1.innerHTML = myObj.people[i].firstName;
+output2.innerHTML = myObj.people[i]['last'+name];
+
+
+var i = 0 ;
+
+
+output1.innerHTML = myObj.people[i].firstName;
+output2.innerHTML = myObj.people[i]['last'+name];
+*/
+
+</script>

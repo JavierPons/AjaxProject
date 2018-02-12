@@ -1,0 +1,32 @@
+<div id="output1" >FirtName:</div>
+<div id="output2" >LastName:</div>
+<div id="output3" >Location:</div>
+
+<script>
+
+var output1 = document.getElementById('output1');
+var output2 = document.getElementById('output2');
+var output3 = document.getElementById('output3');
+
+//initialice HTTP Request
+var hr = new XMLHttpRequest();
+
+var url ='https://api.myjson.com/bins/1enodl';
+
+hr.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      
+      var myObj = JSON.parse(hr.responseText);
+      console.log(myObj);
+      output1.innerHTML = myObj.people[0].firstName;
+      output2.innerHTML = myObj.places[1].location;
+      
+    }
+  
+}
+
+hr.open('GET',url,true);
+hr.send();
+
+
+</script>
